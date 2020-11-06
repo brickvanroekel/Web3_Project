@@ -1,0 +1,6 @@
+# Project exclude paths
+/Project.iml
+.idea/
+src/main/java/util/Secret.java
+# Project exclude paths
+/target/
