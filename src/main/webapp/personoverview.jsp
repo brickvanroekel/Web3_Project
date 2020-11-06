@@ -41,12 +41,17 @@
                         <td>${person.email}</td>
                         <td>${person.firstName}</td>
                         <td>${person.lastName}</td>
-                    <c:when test="${not empty reservations}">
-                        <td> ${person.getReservations}</td>
-                    </c:when>">
-                    <c:otherwise>
-                        <td>No reservations</td>
-                    </c:otherwise>
+                        <c:when test="${user==null}}">
+                            <td>Log in to see reservations</td>
+                        </c:when>
+                        <c:otherwise>
+                            <c:when test="${not empty reservations}">
+                                <td> ${person.getReservations}</td>
+                            </c:when>">
+                            <c:otherwise>
+                                <td>No reservations</td>
+                            </c:otherwise>
+                        </c:otherwise>
                     </tr>
                 </c:forEach>
         <caption>Users Overview</caption>

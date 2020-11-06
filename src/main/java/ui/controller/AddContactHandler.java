@@ -27,16 +27,14 @@ public class AddContactHandler extends RequestHandler {
         if (errors.size() == 0) {
             try {
                 db.addContact(contact);
-                return "contact.jsp";
+                return "contacts.jsp";
             } catch (Exception exc) {
                 errors.add(exc.getMessage());
             }
         }
         request.setAttribute("errors",errors);
-        return "contact.jsp";
+        return "contacts.jsp";
     }
-
-
 
     private void setFirstName(Contact contact, HttpServletRequest request, ArrayList<String> errors) {
         String firstName= request.getParameter("firstName");

@@ -12,12 +12,13 @@ public class OverviewHandler extends RequestHandler{
         request.setAttribute("db", db.getPersons());
 
         Person person = (Person) request.getSession().getAttribute("person");
-        if(person==null)
-            return "personoverview.jsp";
-        else {
+        request.setAttribute("user",person);
+        if(person!=null){
             request.setAttribute("reservations", db.getReservationsUser(person.getUserid()));
             return "personoverview.jsp";
         }
+        request.setAttribute("reservations",null);
+        return "personoverview.jsp";
 
     }
 }

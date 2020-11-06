@@ -8,7 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8">
-    <title>Overview</title>
+    <title>Contacts</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
@@ -34,7 +34,7 @@
                 <th>Hour</th>
                 <th>Name</th>
             </tr>
-            <c:choose>
+           <%-- <c:choose>
             <c:when test="${not empty db}">
             <c:forEach var="contact" items="${db}">
                 <tr>
@@ -46,12 +46,13 @@
             <caption>Contacts Overview</caption>
 
         </c:when>
+
         <c:otherwise>
             <p>There are no contacts</p>
         </c:otherwise>
         </c:choose>
         </table>
-
+        --%>
         <h2>Add contact</h2>
         <form method="post" action="Servlet?command=AddContact" novalidate="novalidate">
             <!-- novalidate in order to be able to run tests correctly -->

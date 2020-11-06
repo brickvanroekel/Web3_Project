@@ -39,8 +39,9 @@ public class Servlet extends HttpServlet {
             request.setAttribute("error", exception.getMessage());
             System.out.println(exception.getMessage());
         }
-        //request.getRequestDispatcher(dest).forward(request,response);
-        response.sendRedirect(dest);
+        if(!response.isCommitted()){
+            request.getRequestDispatcher(dest).forward(request,response);
+        }
     }
 
 
