@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="domain.model.Contact" %>
-<%@ page import="domain.model.ContactTracingService" %>
+<%@ page import="domain.service.ContactTracingService" %>
 <%@ page import="java.util.ArrayList" %>
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
                 <th>Hour</th>
                 <th>Name</th>
             </tr>
-           <%-- <c:choose>
+            <c:choose>
             <c:when test="${not empty db}">
             <c:forEach var="contact" items="${db}">
                 <tr>
@@ -51,9 +51,19 @@
             <p>There are no contacts</p>
         </c:otherwise>
         </c:choose>
+
         </table>
-        --%>
+
         <h2>Add contact</h2>
+            <c:if test="${not empty errors}">
+            <div class="alert-danger">
+                <ul>
+                    <c:forEach items="${errors}" var="error">
+                        <li>${error}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+            </c:if>
         <form method="post" action="Servlet?command=AddContact" novalidate="novalidate">
             <!-- novalidate in order to be able to run tests correctly -->
 
@@ -67,11 +77,11 @@
             </p>
             <p>
                 <label for="date">Date</label>
-                <input type="text" id="date" name="date" value="${datePreviousValue}" required>
+                <input type="date" id="date" name="date" value="${datePreviousValue}" required>
             </p>
             <p>
                 <label for="hour">Hour</label>
-                <input type="text" id="hour"  name="hour" required value="${hourPreviousValue}">
+                <input type="time" id="hour"  name="hour" required value="${hourPreviousValue}">
             </p>
             <p>
                 <label for="gsm">GSM</label>

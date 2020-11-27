@@ -122,7 +122,7 @@ public class ReservationTest {
         button.click();
 
         String title = driver.getTitle();
-        assertEquals(title, "Confirmation");
+        assertEquals("Confirmation",title );
 
     }
 

@@ -41,6 +41,7 @@
                         <td>${person.email}</td>
                         <td>${person.firstName}</td>
                         <td>${person.lastName}</td>
+                        <%--
                         <c:when test="${user==null}}">
                             <td>Log in to see reservations</td>
                         </c:when>
@@ -52,20 +53,16 @@
                                 <td>No reservations</td>
                             </c:otherwise>
                         </c:otherwise>
+                        --%>
                     </tr>
                 </c:forEach>
-        <caption>Users Overview</caption>
+
     </table>
             </c:when>
                 <c:otherwise>
                     <p>There is nobody registered.</p>
                 </c:otherwise>
         </c:choose>
-
-       
-
-        <caption>Users Overview</caption>
-    </table>
 </main>
     <footer>
         &copy; Webontwikkeling 3, UC Leuven-Limburg

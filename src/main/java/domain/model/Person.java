@@ -2,9 +2,14 @@ package domain.model;
 
 import ui.controller.RequestHandler;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class Person {
 	private String userid;
@@ -18,7 +23,7 @@ public class Person {
 	public Person(String userid, String email, String password, String firstName, String lastName) {
 		setUserid(userid);
 		setEmail(email);
-		setPassword(password);
+		setPasswordHash(password);
 		setFirstName(firstName);
 		setLastName(lastName);
 		this.reservations = null;
@@ -65,18 +70,47 @@ public class Person {
 		return password;
 	}
 	
-	public boolean isCorrectPassword(String password) {
+	public boolean isCorrectPassword(String password)  {
 		if(password.isEmpty()){
 			throw new IllegalArgumentException("No password given");
 		}
-		return getPassword().equals(password);
+		try{
+			return hashPassword(password).equals(this.password);
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			return false;
+		}
+
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(String password)  {
+		if(password.isEmpty()){
+			throw new IllegalArgumentException("No password given");
+		}
+		try {
+			this.password = hashPassword(password);
+		} catch (NoSuchAlgorithmException e) {
+			throw new IllegalArgumentException(e);
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+	public void setPasswordHash(String password){
 		if(password.isEmpty()){
 			throw new IllegalArgumentException("No password given");
 		}
 		this.password = password;
+	}
+
+	public String hashPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+
+		MessageDigest crypt = MessageDigest.getInstance("SHA-512");
+		crypt.reset();
+		byte[] passwordBytes = password.getBytes("UTF-8");
+		crypt.update(passwordBytes);
+		byte[] digest = crypt.digest();
+		return new BigInteger(1, digest).toString(16);
 	}
 
 	public String getFirstName() {
@@ -110,7 +144,7 @@ public class Person {
 		if(this.reservations == null ||this.reservations.isEmpty())
 			out="no reservations";
 		for(Reservation reservation: reservations){
-			out += "on " + reservation.getDate() + " at "+reservation.getArrival() +"\n";
+			out += "on " + reservation.getTimestamp().toLocalDateTime().toLocalDate() + " at "+reservation.getTimestamp().toLocalDateTime().toLocalTime() +"\n";
 		}
 		return out;
 	}

@@ -7,11 +7,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonDbInMemory {
+public class PersonDB {
     private Connection connection;
     private String schema;
 
-    public PersonDbInMemory(){
+    public PersonDB(){
         this.connection = DbConnectionService.getDbConnection();
         this.schema = DbConnectionService.getSchema();
     }
@@ -57,24 +57,6 @@ public class PersonDbInMemory {
         }
         return people;
     }
-
-    /*public Person getPerson(String userid){
-        Person person = null;
-        String sqlString = String.format("SELECT * FROM %s.users WHERE userid='"+userid+"'",this.schema);
-        try{
-            PreparedStatement sqlStatement = connection.prepareStatement(sqlString);
-            ResultSet result = sqlStatement.executeQuery();
-            String firstName = result.getString("firstName");
-            String lastName = result.getString("lastName");
-            String email = result.getString("email");
-            String password = result.getString("password");
-            person = new Person(userid,email,password,firstName,lastName);
-
-        }catch (SQLException exception){
-            throw new DbException(exception.getMessage());
-        }
-        return person;
-    }*/
 
     public void updatePerson(Person person){
         String sqlString = String.format("UPDATE %s.users SET email ='"+person.getEmail()+"', password ='"+person.getPassword()+"',firstName ='"+person.getFirstName()+"',lastName ='"+person.getLastName()+"' WHERE userid='"+person.getUserid()+"'",this.schema);

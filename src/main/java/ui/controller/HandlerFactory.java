@@ -1,7 +1,7 @@
 package ui.controller;
 
 
-import domain.model.ContactTracingService;
+import domain.service.ContactTracingService;
 import domain.model.DomainException;
 
 import java.lang.reflect.InvocationTargetException;

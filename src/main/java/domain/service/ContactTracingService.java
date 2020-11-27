@@ -1,14 +1,17 @@
-package domain.model;
+package domain.service;
 
 import domain.db.ContactDB;
-import domain.db.PersonDbInMemory;
+import domain.db.PersonDB;
 import domain.db.ReservationDB;
+import domain.model.Contact;
+import domain.model.Person;
+import domain.model.Reservation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactTracingService {
-    private PersonDbInMemory personDb = new PersonDbInMemory();
+    private PersonDB personDb = new PersonDB();
     private ReservationDB reservationDB = new ReservationDB();
     private ContactDB contactDB = new ContactDB();
 
@@ -58,7 +61,7 @@ public class ContactTracingService {
         getContactDB().add(contact);
     }
 
-    private PersonDbInMemory getPersonDb() {return personDb;}
+    private PersonDB getPersonDb() {return personDb;}
     private ReservationDB getReservationDB() { return reservationDB;}
     private ContactDB getContactDB(){return contactDB;}
 

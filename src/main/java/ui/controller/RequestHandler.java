@@ -1,10 +1,14 @@
 package ui.controller;
 
-import domain.model.ContactTracingService;
+import domain.service.ContactTracingService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public abstract class RequestHandler {
     protected ContactTracingService db;
@@ -18,6 +22,7 @@ public abstract class RequestHandler {
     public ContactTracingService getDb() {
         return db;
     }
+
 
 
 }

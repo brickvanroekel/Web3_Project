@@ -2,6 +2,7 @@ package domain.model;
 
 import ui.controller.RequestHandler;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -10,28 +11,35 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Contact {
-    private LocalDate date;
+    //private String contactId;
     private String email;
-    private LocalTime hour;
+    private Timestamp timestamp;
     private String firstName;
     private String lastName;
     private String gsm;
 
-
-    DateTimeFormatter dFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    DateTimeFormatter tFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
-    public Contact(String firstName, String lastName, String date, String hour, String gsm,String email) {
+    public Contact(String firstName, String lastName, Timestamp timestamp, String gsm,String email) {
+        //setContactId(contactId);
         setFirstName(firstName);
         setLastName(lastName);
+        setTimestamp(timestamp);
         setEmail(email);
         setGsm(gsm);
-        setDate(date);
-        setHour(hour);
+
     }
 
     public Contact() {
     }
+
+    /*public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        if (contactId != null || !contactId.trim().isEmpty())
+            this.contactId = contactId;
+        throw new IllegalArgumentException("No ID given");
+    }*/
 
     public String getGsm() {
         return gsm;
@@ -83,24 +91,11 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(String date) {
-        if(date == null  || date.trim().isEmpty())
-            throw new IllegalArgumentException("Give correct date");
-        this.date = LocalDate.parse(date, dFormatter);
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
-
-    public LocalTime getHour() {
-        return hour;
-    }
-
-    public void setHour(String arrival) {
-        if(arrival == null || arrival.trim().isEmpty())
-            throw new IllegalArgumentException("Give correct arrival time");
-        this.hour = LocalTime.parse(arrival,tFormatter);
-    }
-
 }

@@ -39,14 +39,13 @@
 
 
     <form method="post" action="Servlet?command=Book" novalidate="novalidate">
-        <!-- novalidate in order to be able to run tests correctly -->
         <p>
             <label for="date">Date</label>
-            <input type="text" id="date" name="date" value="${datePreviousValue}" required>
+            <input type="date" id="date" name="date" value="${datePreviousValue}" required >
         </p>
         <p>
-            <label for="arrival">Arrival</label>
-            <input type="text" id="arrival" name="arrival" required value="${arrivalPreviousValue}">
+            <label for="hour">Arrival</label>
+            <input type="time" id="hour" name="hour" required value="${arrivalPreviousValue}" >
         </p>
         <p><input type="submit" id="book" value="Book"></p>
 
