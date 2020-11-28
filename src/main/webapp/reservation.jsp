@@ -1,6 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +21,9 @@
                 <li><a href="Servlet?command=Overview">Overview</a></li>
                 <li ><a href="Servlet?command=Register">Register</a></li>
                 <li id="actual"><a href="Servlet?command=Reservation">Reservation</a></li>
+                <c:if test="${person!=null}">
+                    <li><a href="Servlet?command=RegisterTests">Register Test Result</a></li>
+                </c:if>
                 <li><a href="Servlet?command=Contacts">Contacts</a></li>
             </ul>
         </nav>
@@ -41,11 +46,11 @@
     <form method="post" action="Servlet?command=Book" novalidate="novalidate">
         <p>
             <label for="date">Date</label>
-            <input type="date" id="date" name="date" value="${datePreviousValue}" required >
+            <input type="date" id="date" name="date" value="<c:out value="${datePreviousValue}"/>" required >
         </p>
         <p>
             <label for="hour">Arrival</label>
-            <input type="time" id="hour" name="hour" required value="${arrivalPreviousValue}" >
+            <input type="time" id="hour" name="hour" required value="<c:out value="${arrivalPreviousValue}"/>" >
         </p>
         <p><input type="submit" id="book" value="Book"></p>
 

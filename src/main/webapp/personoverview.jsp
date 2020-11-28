@@ -1,4 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +21,9 @@
                 <li id="actual"><a href="Servlet?command=Overview">Overview</a></li>
                 <li><a href="Servlet?command=Register">Register</a></li>
                 <li><a href="Servlet?command=Reservation">Reservation</a></li>
+                <c:if test="${person!=null}">
+                    <li><a href="Servlet?command=RegisterTests">Register Test Result</a></li>
+                </c:if>
                 <li><a href="Servlet?command=Contacts">Contacts</a></li>
             </ul>
         </nav>
@@ -38,9 +45,9 @@
             <c:when test="${not empty db}">
                 <c:forEach var="person" items="${db}">
                     <tr>
-                        <td>${person.email}</td>
-                        <td>${person.firstName}</td>
-                        <td>${person.lastName}</td>
+                        <td><c:out value="${person.email}"/></td>
+                        <td><c:out value="${person.firstName}"/></td>
+                        <td><c:out value="${person.lastName}"/></td>
                         <%--
                         <c:when test="${user==null}}">
                             <td>Log in to see reservations</td>

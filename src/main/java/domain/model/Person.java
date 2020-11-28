@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,8 +18,8 @@ public class Person {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private List<Reservation> reservations;
-	private List<Contact> contacts;
+	private ArrayList<Reservation> reservations;
+	private ArrayList<Contact> contacts;
 
 	public Person(String userid, String email, String password, String firstName, String lastName) {
 		setUserid(userid);
@@ -151,7 +152,9 @@ public class Person {
 
 	public void addContact(Contact contact){ this.contacts.add(contact);}
 
-
+	public ArrayList getContacts(){
+		return this.contacts;
+	}
 	
 	@Override
 	public String toString(){

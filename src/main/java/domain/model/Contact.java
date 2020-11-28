@@ -18,7 +18,7 @@ public class Contact {
     private String lastName;
     private String gsm;
 
-    public Contact(String firstName, String lastName, Timestamp timestamp, String gsm,String email) {
+    public Contact(String firstName, String lastName, String gsm,String email, Timestamp timestamp) {
         //setContactId(contactId);
         setFirstName(firstName);
         setLastName(lastName);

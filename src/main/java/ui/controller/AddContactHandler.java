@@ -38,6 +38,7 @@ public class AddContactHandler extends RequestHandler {
             try {
                 db.addContact(contact);
                 person.addContact(contact);
+                System.out.println(person.getContacts());
                 return "contacts.jsp";
             } catch (Exception exc) {
                 System.out.println(exc.getMessage());
@@ -78,9 +79,7 @@ public class AddContactHandler extends RequestHandler {
 
     private void setTimestamp(HttpServletRequest request, Contact contact, ArrayList<String> errors){
         String date = request.getParameter("date");
-        System.out.println(date);
         String hour=request.getParameter("hour");
-        System.out.println(hour);
         String timestampPattern="yyyy-M-d HH:mm";
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern(timestampPattern);
         LocalDateTime dateTime=null;

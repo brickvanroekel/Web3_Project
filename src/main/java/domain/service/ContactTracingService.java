@@ -18,8 +18,6 @@ public class ContactTracingService {
     public ContactTracingService() {
     }
 
-
-
     public Person getPerson(String personId) {
         List<Person> personList = getPersons();
         for (Person p : personList) {
@@ -57,9 +55,6 @@ public class ContactTracingService {
         return getAllContacts();
     }
 
-    public void addContact(Contact contact){
-        getContactDB().add(contact);
-    }
 
     private PersonDB getPersonDb() {return personDb;}
     private ReservationDB getReservationDB() { return reservationDB;}
@@ -73,5 +68,7 @@ public class ContactTracingService {
     }
 
     public ArrayList<Contact> getAllContacts(){ return getContactDB().getAllContacts(this);}
-
+    public void addContact(Contact contact){
+        getContactDB().add(contact);
+    }
 }

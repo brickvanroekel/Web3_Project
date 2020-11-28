@@ -26,6 +26,8 @@ public class BookHandler extends RequestHandler {
         Reservation reservation = new Reservation();
         setTimestamp(request,reservation,errors);
         reservation.setShopper(person.getUserid());
+        reservation.setId();
+
 
         if(errors.size()==0){
             try {
@@ -43,9 +45,7 @@ public class BookHandler extends RequestHandler {
 
     private void setTimestamp(HttpServletRequest request,Reservation reservation,ArrayList<String> errors){
         String date = request.getParameter("date");
-        System.out.println(date);
         String hour=request.getParameter("hour");
-        System.out.println(hour);
         String timestampPattern="yyyy-M-d HH:mm";
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern(timestampPattern);
         LocalDateTime dateTime=null;

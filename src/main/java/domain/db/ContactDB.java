@@ -51,7 +51,7 @@ public class ContactDB {
                 String gsm = resultSet.getString("gsm");
                 String email = resultSet.getString("email");
 
-                Contact contact = new Contact(firstName,lastName,timestamp,gsm,email);
+                Contact contact = new Contact(firstName,lastName,gsm,email,timestamp);
                 contacts.add(contact);
             }
         }catch (SQLException exception){

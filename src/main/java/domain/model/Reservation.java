@@ -6,6 +6,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Reservation implements Comparable<Reservation>{
@@ -13,6 +15,7 @@ public class Reservation implements Comparable<Reservation>{
     private Timestamp timestamp;
     private String shopper;
 
+    private List<String> registeredIDs;
 
     public Reservation(){
 
@@ -24,19 +27,12 @@ public class Reservation implements Comparable<Reservation>{
         setShopper(shopper);
     }
 
-
-
-    public Reservation(Timestamp timestamp, String shopper){
-        setId();
-        setTimestamp(timestamp);
-        setShopper(shopper);
-    }
-    public Reservation(Timestamp timestamp){
-        setId();
-        setTimestamp(timestamp);
-    }
     public void setId(){
-        this.id =  String.valueOf(Math.random()*10000);
+        String id =  String.valueOf(Math.random()*100000);
+        if (!registeredIDs.contains(id)) {
+            this.id = id;
+        }
+        this.setId();
     }
 
     public String getId(){return id;}
