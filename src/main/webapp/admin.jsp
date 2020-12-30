@@ -67,6 +67,7 @@
                 </c:forEach>
             </select>
             <input type="submit" name="submit" value="Filter">
+            <a href="Servlet?command=Admin&ClearFilter=true">Clear filter</a>
         </form>
         <table>
 

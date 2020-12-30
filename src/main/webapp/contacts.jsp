@@ -44,6 +44,7 @@
             <label for="endDate">Until</label>
             <input type="date" name="endDate" id="endDate" value="${endPreviousValue}">
             <input type="submit" name="submit" value="Filter">
+            <a href="Servlet?command=FilterContacts&ClearFilter=true">Clear filter</a>
         </form>
         <table>
             <c:choose>

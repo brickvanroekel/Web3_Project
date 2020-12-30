@@ -25,6 +25,10 @@ public class AdminHandler extends RequestHandler{
         Utility.checkrole(request, roles);
 
         if("POST".equalsIgnoreCase(request.getMethod())){
+            if(request.getParameter("ClearFilter") != null){
+                request.setAttribute("contacts",getDb().getAllContacts());
+                return "admin.jsp";
+            }
             List<Contact> filteredContacts = new ArrayList<>();
             setStartDate(request);
             setEndDate(request);

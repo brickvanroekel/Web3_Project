@@ -19,6 +19,11 @@ public class FilterContactsHandler extends RequestHandler {
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         Person person = (Person) request.getSession().getAttribute("person");
 
+        if(request.getParameter("ClearFilter") != null){
+            request.setAttribute("contacts",getDb().getContactsUser(person.getUserid()));
+            return "contacts.jsp";
+        }
+
         List<Contact> filteredContacts = new ArrayList<>();
 
         if(errors.size()==0){
