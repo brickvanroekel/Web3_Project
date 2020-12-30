@@ -23,7 +23,7 @@ public class OverviewHandler extends RequestHandler{
         ArrayList<String> reservationsString = new ArrayList<>();
         System.out.println(reservationsUser);
         try {
-            if (person.getRole().equals("administrator")){
+            if (person.getRoleString().equals("administrator")){
                 request.setAttribute("db",db.getPersons());
                 request.setAttribute("reservations",getDb().getAllReservations());
             }
