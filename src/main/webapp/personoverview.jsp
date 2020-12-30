@@ -21,13 +21,14 @@
     <table>
         <c:choose>
             <c:when test="${person.role == 'administrator'}">
-                <tr>
-                    <th>E-mail</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                </tr>
+
                 <c:choose>
                     <c:when test="${not empty db}">
+                        <tr>
+                            <th>E-mail</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
                         <c:forEach var="person" items="${db}">
                             <tr>
                                 <td><c:out value="${person.email}"/></td>
@@ -43,12 +44,13 @@
                 <tr>
                     <th>Reservations</th>
                 </tr>
-                <tr>
-                    <th>ID</th>
-                    <th>Date & time</th>
-                </tr>
+
                 <c:choose>
                     <c:when test="${not empty reservations}">
+                        <tr>
+                            <th>ID</th>
+                            <th>Date & time</th>
+                        </tr>
                         <c:forEach var="reservation" items="${reservations}">
                             <tr>
                                 <td><c:out value="${reservation.id}"/></td>

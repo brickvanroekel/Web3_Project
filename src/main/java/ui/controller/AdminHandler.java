@@ -36,10 +36,12 @@ public class AdminHandler extends RequestHandler{
             List<Contact> contacts = getDb().getContactsUser(userid);
             try {
                 for (Contact c:contacts) {
-                    if(c.getTimestamp().toLocalDateTime().toLocalDate().isAfter(startDate) && c.getTimestamp().toLocalDateTime().toLocalDate().isBefore(endDate)){
+                    if((c.getTimestamp().toLocalDateTime().toLocalDate().isAfter(startDate) || c.getTimestamp().toLocalDateTime().toLocalDate().isEqual(startDate)) && (c.getTimestamp().toLocalDateTime().toLocalDate().isBefore(endDate)) || c.getTimestamp().toLocalDateTime().toLocalDate().isEqual(endDate)){
                         filteredContacts.add(c);
                     }
                 }
+                request.setAttribute("startPreviousValue",startDate);
+                request.setAttribute("endPreviousValue",endDate);
                 request.setAttribute("contacts",filteredContacts);
                 return "admin.jsp";
             } catch (Exception exc) {

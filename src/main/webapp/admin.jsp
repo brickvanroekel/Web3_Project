@@ -23,13 +23,14 @@
             User Overview
         </h2>
         <table>
-            <tr>
-                <th>E-mail</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-            </tr>
+
             <c:choose>
                 <c:when test="${not empty db}">
+                    <tr>
+                        <th>E-mail</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
                     <c:forEach var="person" items="${db}">
                         <tr>
                             <td><c:out value="${person.email}"/></td>
@@ -54,11 +55,11 @@
             </div>
         </c:if>
 
-        <form name ="adminFilterForm" onsubmit="return validateAdminFilterForm()" action="Servlet?command=Admin" method="post">
+        <form class="filter" name ="adminFilterForm" onsubmit="return validateAdminFilterForm()" action="Servlet?command=Admin" method="post">
             <label for="startDate">From</label>
-            <input type="date" name="startDate" id="startDate">
+            <input type="date" name="startDate" id="startDate" value="${startPreviousValue}">
             <label for="endDate">Until</label>
-            <input type="date" name="endDate" id="endDate">
+            <input type="date" name="endDate" id="endDate" value="${endPreviousValue}">
             <label for="user">User</label>
             <select id="user" name="user">
                 <c:forEach var="person" items="${db}" >
@@ -68,15 +69,16 @@
             <input type="submit" name="submit" value="Filter">
         </form>
         <table>
-            <tr>
-                <th>Date</th>
-                <th>user</th>
-                <th>Contactname</th>
-                <th>Email</th>
-                <th>Phone number</th>
-            </tr>
+
             <c:choose>
                 <c:when test="${not empty contacts}">
+                    <tr>
+                        <th>Date</th>
+                        <th>user</th>
+                        <th>Contactname</th>
+                        <th>Email</th>
+                        <th>Phone number</th>
+                    </tr>
                     <c:forEach var="contact" items="${contacts}">
                         <tr>
                             <td><c:out value="${contact.timestamp}"/></td>
@@ -94,12 +96,13 @@
         </table>
         <h2>Covid-19 tests</h2>
         <table>
-            <tr>
-                <th>user</th>
-                <th>date</th>
-            </tr>
+
             <c:choose>
                 <c:when test="${not empty tests}">
+                    <tr>
+                        <th>user</th>
+                        <th>date</th>
+                    </tr>
                     <c:forEach var="test" items="${tests}">
                         <tr>
                             <td><c:out value="${test.userid}"/></td>

@@ -168,6 +168,14 @@ select{
 	width: 100px;
 }
 
+.filter{
+	margin: 0px;
+}
+
+.filter input,.filter label{
+	margin: 0px;
+}
+
 /* desktop */
 @media screen and (min-width: 650px) {
 	div#container {
@@ -222,7 +230,14 @@ select{
     textarea {
         vertical-align: middle;    
     }
-	
+	.filter{
+		margin: 0px;
+		width: auto;
+	}
+
+	.filter input,.filter label{
+		margin: 0px;
+	}
 	
 }
 

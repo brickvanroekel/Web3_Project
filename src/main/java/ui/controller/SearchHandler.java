@@ -1,9 +1,6 @@
 package ui.controller;
 
-import domain.model.Contact;
-import domain.model.CovidTest;
-import domain.model.Person;
-import domain.model.Reservation;
+import domain.model.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +13,15 @@ public class SearchHandler extends RequestHandler {
     private static final int quarantine = 14;
     @Override
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        Role[] roles = {Role.administrator,Role.customer};
+        Utility.checkrole(request, roles);
+
         Person person = (Person) request.getSession().getAttribute("person");
         ArrayList<String> errors = new ArrayList<>();
         CovidTest test = db.getTestUser(person.getUserid());
 
         if(test.getUserid()==null){
-            errors.add("You have not registered a test yet. You can register one at the 'Register test' page.");
+            errors.add("You have not registered a test yet. You can register one at the 'Register test result' page.");
             request.setAttribute("errors",errors);
             return "search.jsp";
         }
@@ -46,11 +46,19 @@ public class SearchHandler extends RequestHandler {
                 cancelableReservations.add(r);
             }
         }
+
+        if("POST".equalsIgnoreCase(request.getMethod())){
+            for (Reservation r:cancelableReservations) {
+                db.removeReservation(r.getId());
+            }
+            request.getSession().setAttribute("succes","You have succesfully canceled you reservation(s)");
+            return "reservation.jsp";
+        }
+
         request.setAttribute("contacts",riskContacts);
         request.setAttribute("reservations",cancelableReservations);
         request.getSession().setAttribute("cancelableReservations",cancelableReservations);
         return "search.jsp";
-
 
     }
 

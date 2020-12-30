@@ -38,23 +38,22 @@
         </c:if>
 
         <h2>Contact overview</h2>
-        <form name ="contactFilterForm" onsubmit="return validateContactFilterForm()" action="Servlet?command=FilterContacts" method="post">
+        <form class="filter" name ="contactFilterForm" onsubmit="return validateContactFilterForm()" action="Servlet?command=FilterContacts" method="post">
             <label for="startDate">From</label>
-            <input type="date" name="startDate" id="startDate">
+            <input type="date" name="startDate" id="startDate" value="${startPreviousValue}">
             <label for="endDate">Until</label>
-            <input type="date" name="endDate" id="endDate">
+            <input type="date" name="endDate" id="endDate" value="${endPreviousValue}">
             <input type="submit" name="submit" value="Filter">
         </form>
         <table>
-            <tr>
-                <th>Date & hour</th>
-                <th>Name</th>
-                <th>e-mail</th>
-                <th>mobile</th>
-                <!--<th>test-result</th>-->
-            </tr>
             <c:choose>
             <c:when test="${not empty contacts}">
+                <tr>
+                    <th>Date & hour</th>
+                    <th>Name</th>
+                    <th>e-mail</th>
+                    <th>mobile</th>
+                </tr>
             <c:forEach var="contact" items="${contacts}">
                 <tr>
                     <td><c:out value="${contact.timestamp}"/></td>

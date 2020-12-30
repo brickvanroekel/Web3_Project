@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -40,8 +42,8 @@ public class AddContactHandler extends RequestHandler {
                 request.setAttribute("contacts",contacts);
                 request.setAttribute("firstNamePreviousValue", "");
                 request.setAttribute("lastNamePreviousValue", "");
-                request.setAttribute("datePreviousValue","");
-                request.setAttribute("hourPreviousValue","");
+                request.setAttribute("datePreviousValue", LocalDate.now());
+                request.setAttribute("hourPreviousValue", LocalTime.now());
                 request.setAttribute("gsmPreviousValue", "");
                 request.setAttribute("emailPreviousValue", "");
                 request.getSession().setAttribute("succes","You have succesfully added a contact!");

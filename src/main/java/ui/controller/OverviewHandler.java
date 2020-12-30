@@ -3,6 +3,7 @@ package ui.controller;
 import domain.model.Contact;
 import domain.model.Person;
 import domain.model.Reservation;
+import domain.model.Role;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,10 @@ public class OverviewHandler extends RequestHandler{
     @Override
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException{
         Person person = (Person) request.getSession().getAttribute("person");
+
+        Role[] roles = {Role.administrator,Role.customer};
+        Utility.checkrole(request, roles);
+
         ArrayList<String> errors = new ArrayList<>();
         if(person==null){
             errors.add("Log in");

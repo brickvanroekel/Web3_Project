@@ -36,7 +36,7 @@
             </div>
         </c:if>
 
-    <form name="registerForm" onsubmit="return validateRegisterForm()" method="post" action="Servlet?command=SignUp" novalidate="novalidate">
+    <form name="registerForm" onsubmit="return validateRegisterForm()" method="post" action="Servlet?command=Register" novalidate="novalidate">
         <!-- novalidate in order to be able to run tests correctly -->
         <p>
             <label for="userid">User id</label>

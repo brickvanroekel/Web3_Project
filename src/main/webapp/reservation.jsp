@@ -36,14 +36,14 @@
             </div>
         </c:if>
 
-    <form name="reservationForm" onsubmit="return validateReservationForm()" method="post" action="Servlet?command=Book" novalidate="novalidate">
+    <form name="reservationForm" onsubmit="return validateReservationForm()" method="post" action="Servlet?command=Reservation" novalidate="novalidate">
         <p>
             <label for="date">Date</label>
             <input type="date" id="date" name="date" value="<c:out value="${datePreviousValue}"/>" required >
         </p>
         <p>
             <label for="hour">Arrival</label>
-            <input type="time" id="hour" name="hour" required value="<c:out value="${arrivalPreviousValue}"/>" >
+            <input type="time" id="hour" name="hour" required value="<c:out value="${hourPreviousValue}"/>" >
         </p>
         <p><input type="submit" id="book" value="Book"></p>
 

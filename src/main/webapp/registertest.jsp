@@ -35,7 +35,7 @@
                 </ul>
             </div>
         </c:if>
-        <form name="registerTestForm" onsubmit="return validateRegisterTestForm()" method="post" action="Servlet?command=TestPositive" novalidate="novalidate">
+        <form name="registerTestForm" onsubmit="return validateRegisterTestForm()" method="post" action="Servlet?command=RegisterTest" novalidate="novalidate">
             <p>
                 <label for="date">Date</label>
                 <input type="date" id="date" name="date" value="<c:out value="${datePreviousValue}"/>" required>

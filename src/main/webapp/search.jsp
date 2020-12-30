@@ -28,13 +28,14 @@
             </div>
         </c:if>
         <table>
-            <tr>
-                <th>Name</th>
-                <th>GSM</th>
-                <th>Email</th>
-            </tr>
+
             <c:choose>
                 <c:when test="${not empty contacts}">
+                    <tr>
+                        <th>Name</th>
+                        <th>GSM</th>
+                        <th>Email</th>
+                    </tr>
                     <c:forEach var="contact" items="${contacts}">
                         <tr>
                             <td><c:out value="${contact.firstName}"/> <c:out value="${contact.lastName}"/></td>
@@ -50,28 +51,28 @@
         </table>
         <h2>Cancel following reservations</h2>
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Date & time</th>
-            </tr>
+
             <c:choose>
                 <c:when test="${not empty reservations}">
+                    <tr>
+                        <th>ID</th>
+                        <th>Date & time</th>
+                    </tr>
                     <c:forEach var="reservation" items="${reservations}">
                         <tr>
                             <td><c:out value="${reservation.id}"/></td>
                             <td><c:out value="${reservation.timestamp}"/></td>
                         </tr>
                     </c:forEach>
+                    <form method="post" action="Servlet?command=Search">
+                        <p><input type="submit" id="deleteReservation" value="Cancel"></p>
+                    </form>
                 </c:when>
                 <c:otherwise>
                     <p>There are no reservation that need to be cancelled</p>
                 </c:otherwise>
             </c:choose>
         </table>
-
-        <form method="post" action="Servlet?command=DeleteReservations">
-            <p><input type="submit" id="deleteReservation" value="Cancel"></p>
-        </form>
     </main>
     <footer>&copy; Webontwikkeling 3, UC Leuven-Limburg</footer>
 </div>
