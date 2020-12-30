@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 public class Reservation implements Comparable<Reservation>{
     private String id;
     private Timestamp timestamp;
     private String shopper;
 
-    private List<String> registeredIDs;
+
 
     public Reservation(){
 
@@ -27,12 +28,8 @@ public class Reservation implements Comparable<Reservation>{
         setShopper(shopper);
     }
 
-    public void setId(){
-        String id =  String.valueOf(Math.random()*100000);
-        if (!registeredIDs.contains(id)) {
-            this.id = id;
-        }
-        this.setId();
+    public void setId(String id){
+        this.id = id;
     }
 
     public String getId(){return id;}
@@ -55,6 +52,11 @@ public class Reservation implements Comparable<Reservation>{
         if(time.isAfter(this.timestamp.toLocalDateTime().toLocalTime())&& time.isBefore(this.timestamp.toLocalDateTime().toLocalTime().plusHours(1)))
             return true;
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "On " + timestamp.toLocalDateTime().toLocalDate() + " at "+timestamp.toLocalDateTime().toLocalTime();
     }
 
     @Override

@@ -5,45 +5,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Home</title>
-<link rel="stylesheet" type="text/css" href="css/style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="scripts/validateForms.js"></script>
 </head>
 <body>
 	<div id="container">
-		<header>
-			<h1>
-				<span>Scalini Mode</span>
-			</h1>
-			<nav>
-				<ul>
-					<li id="actual"><a href="Servlet?command=Home">Home</a></li>
-					<li><a href="Servlet?command=Overview">Overview</a></li>
-					<li><a href="Servlet?command=Register">Register</a></li>
-					<li><a href="Servlet?command=Reservation">Reservation</a></li>
-					<c:if test="${person!=null}">
-						<li><a href="Servlet?command=RegisterTests">Register Test Result</a></li>
-					</c:if>
-					<li><a href="Servlet?command=Contacts">Contacts</a></li>
-				</ul>
-			</nav>
-			<h2>Home</h2>
-
-		</header>
+		<jsp:include page="header.jsp">
+			<jsp:param name="title" value="Home"/>
+			<jsp:param name="actual" value="index"/>
+		</jsp:include>
 		<main>
 			<c:if test="${not empty errors}">
 				<div class="alert-danger">
 					<ul>
 						<c:forEach items="${errors}" var="error">
-							<li>${error}</li>
+							<li><c:out value="${error}"/></li>
 						</c:forEach>
 					</ul>
 				</div>
 			</c:if>
+			<c:if test="${not empty succes}">
+				<div class="alert-succes">
+					<ul>
+						<li><c:out value="${succes}"/></li>
+					</ul>
+				</div>
+			</c:if>
+
 			<c:if test="${person==null}">
 				<h3>Please log in</h3>
-				<form method="post" novalidate="novalidate" action="Servlet?command=LogIn">
+				<form name="logInForm" onsubmit="return validateLogInForm()" method="post" novalidate="novalidate" action="Servlet?command=LogIn">
 					<p><label for="userid">User id</label><input type="text" id="userid" name="userid" required></p>
 					<p><label for="password">Password</label><input type="password" id="password" name="password" required></p>
 					<p><input type="submit" id="logIn" value="Log in"></p>

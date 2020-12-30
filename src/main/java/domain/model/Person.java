@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static domain.model.Role.*;
 
 
 public class Person {
@@ -18,8 +19,8 @@ public class Person {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private ArrayList<Reservation> reservations;
-	private ArrayList<Contact> contacts;
+	private Role role = customer;
+
 
 	public Person(String userid, String email, String password, String firstName, String lastName) {
 		setUserid(userid);
@@ -27,10 +28,18 @@ public class Person {
 		setPasswordHash(password);
 		setFirstName(firstName);
 		setLastName(lastName);
-		this.reservations = null;
-		this.contacts = null;
+
 	}
-	
+
+	public Person(String userid, String email, String password, String firstName, String lastName, String role) {
+		setUserid(userid);
+		setEmail(email);
+		setPasswordHash(password);
+		setFirstName(firstName);
+		setLastName(lastName);
+		setRole(role);
+	}
+
 	public Person() {
 	}
 
@@ -40,19 +49,19 @@ public class Person {
 	}
 
 	public void setUserid(String userid) {
-		if(userid.isEmpty()){
+		if (userid.isEmpty()) {
 			throw new IllegalArgumentException("No userid given");
 		}
 		this.userid = userid;
 	}
 
 	public void setEmail(String email) {
-		if(email.isEmpty()){
+		if (email.isEmpty()) {
 			throw new IllegalArgumentException("No email given");
 		}
-		String USERID_PATTERN = 
+		String USERID_PATTERN =
 				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+						+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		Pattern p = Pattern.compile(USERID_PATTERN);
 		Matcher m = p.matcher(email);
 		if (!m.matches()) {
@@ -61,31 +70,30 @@ public class Person {
 		this.email = email;
 	}
 
-	
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
-	public boolean isCorrectPassword(String password)  {
-		if(password.isEmpty()){
+
+	public boolean isCorrectPassword(String password) {
+		if (password.isEmpty()) {
 			throw new IllegalArgumentException("No password given");
 		}
-		try{
+		try {
 			return hashPassword(password).equals(this.password);
-		}catch (Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return false;
 		}
 
 	}
 
-	public void setPassword(String password)  {
-		if(password.isEmpty()){
+	public void setPassword(String password) {
+		if (password.isEmpty()) {
 			throw new IllegalArgumentException("No password given");
 		}
 		try {
@@ -97,14 +105,14 @@ public class Person {
 		}
 	}
 
-	public void setPasswordHash(String password){
-		if(password.isEmpty()){
+	public void setPasswordHash(String password) {
+		if (password.isEmpty()) {
 			throw new IllegalArgumentException("No password given");
 		}
 		this.password = password;
 	}
 
-	public String hashPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+	public String hashPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
 		MessageDigest crypt = MessageDigest.getInstance("SHA-512");
 		crypt.reset();
@@ -119,7 +127,7 @@ public class Person {
 	}
 
 	public void setFirstName(String firstName) {
-		if(firstName.isEmpty()){
+		if (firstName.isEmpty()) {
 			throw new IllegalArgumentException("No firstname given");
 		}
 		this.firstName = firstName;
@@ -130,32 +138,36 @@ public class Person {
 	}
 
 	public void setLastName(String lastName) {
-		if(lastName.isEmpty()){
+		if (lastName.isEmpty()) {
 			throw new IllegalArgumentException("No last name given");
 		}
 		this.lastName = lastName;
 	}
 
-	public void addReservation(Reservation reservation){
-		this.reservations.add(reservation);
+	public void setRole(Role role){
+		this.role = role;
 	}
 
-	public String getReservations(){
-		String out = "";
-		if(this.reservations == null ||this.reservations.isEmpty())
-			out="no reservations";
-		for(Reservation reservation: reservations){
-			out += "on " + reservation.getTimestamp().toLocalDateTime().toLocalDate() + " at "+reservation.getTimestamp().toLocalDateTime().toLocalTime() +"\n";
+	public void setRole(String role){
+		if (role == null){
+			this.role = customer;
+			return;
 		}
-		return out;
+		if(role.equals("costumer"))
+			this.role = customer;
+		else if (role.equals("administrator"))
+			this.role = administrator;
 	}
 
-	public void addContact(Contact contact){ this.contacts.add(contact);}
-
-	public ArrayList getContacts(){
-		return this.contacts;
+	public Role getRole(){
+		return role;
 	}
-	
+
+	public String getRoleString(){
+		return role.toString();
+	}
+
+
 	@Override
 	public String toString(){
 		return getFirstName() + " " + getLastName() + ": " + getUserid() + ", " + getEmail();

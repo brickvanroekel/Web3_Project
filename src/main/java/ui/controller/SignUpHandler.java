@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import static domain.model.Role.administrator;
 
 public class SignUpHandler extends RequestHandler {
 
@@ -25,6 +26,8 @@ public class SignUpHandler extends RequestHandler {
         if (errors.size() == 0) {
             try {
                 db.addPerson(person);
+                request.getSession().setAttribute("succes","You have succesfully registered!");
+                response.sendRedirect("Servlet?command=Home");
                 return "index.jsp";
             } catch (Exception exc) {
                 errors.add(exc.getMessage());
@@ -38,12 +41,12 @@ public class SignUpHandler extends RequestHandler {
         String userid= request.getParameter("userid").toLowerCase();
         try{
             person.setUserid(userid);
-            request.setAttribute("useridClass", "has-succes");
+            if(userid.equals("admin"))
+                person.setRole(administrator);
             request.setAttribute("useridPreviousValue", userid);
         }
         catch (Exception exc){
             errors.add(exc.getMessage());
-            request.setAttribute("useridClass", "has-error");
         }
     }
 
@@ -51,12 +54,10 @@ public class SignUpHandler extends RequestHandler {
         String firstName= request.getParameter("firstName");
         try{
             person.setFirstName(firstName);
-            request.setAttribute("firstNameClass", "has-succes");
             request.setAttribute("firstNamePreviousValue", firstName);
         }
         catch (Exception exc){
             errors.add(exc.getMessage());
-            request.setAttribute("firstNameClass", "has-error");
         }
     }
 
@@ -64,12 +65,10 @@ public class SignUpHandler extends RequestHandler {
         String lastName= request.getParameter("lastName");
         try{
             person.setLastName(lastName);
-            request.setAttribute("lastNameClass", "has-succes");
             request.setAttribute("lastNamePreviousValue", lastName);
         }
         catch (Exception exc){
             errors.add(exc.getMessage());
-            request.setAttribute("lastNameClass", "has-error");
         }
     }
 
@@ -77,12 +76,10 @@ public class SignUpHandler extends RequestHandler {
         String email = request.getParameter("email");
         try{
             person.setEmail(email);
-            request.setAttribute("emailClass", "has-succes");
             request.setAttribute("emailPreviousValue", email);
         }
         catch (Exception exc){
             errors.add(exc.getMessage());
-            request.setAttribute("emailClass", "has-error");
         }
     }
 
@@ -90,12 +87,10 @@ public class SignUpHandler extends RequestHandler {
         String password= request.getParameter("password");
         try{
             person.setPassword(password);
-            request.setAttribute("passwordClass", "has-succes");
             request.setAttribute("passwordPreviousValue", password);
         }
         catch (Exception exc){
             errors.add(exc.getMessage());
-            request.setAttribute("passwordClass", "has-error");
         }
     }
 }

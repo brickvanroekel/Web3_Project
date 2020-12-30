@@ -10,46 +10,61 @@
     <meta charset="UTF-8">
     <title>Contacts</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="scripts/validateForms.js"></script>
 </head>
 <body>
 <div id="container">
-    <header>
-        <h1><span>Scalini Mode</span></h1>
-        <nav>
-            <ul>
-                <li><a href="Servlet?command=Home">Home</a></li>
-                <li><a href="Servlet?command=Overview">Overview</a></li>
-                <li><a href="Servlet?command=Register">Register</a></li>
-                <li><a href="Servlet?command=Reservation">Reservation</a></li>
-                <c:if test="${person!=null}">
-                    <li><a href="Servlet?command=RegisterTests">Register Test Result</a></li>
-                </c:if>
-                <li id="actual"><a href="Servlet?command=Contacts">Contacts</a></li>
-            </ul>
-        </nav>
-
-    </header>
+    <jsp:include page="header.jsp">
+        <jsp:param name="title" value="Contacts"/>
+        <jsp:param name="actual" value="contacts"/>
+    </jsp:include>
     <main>
+
+        <c:if test="${not empty errors}">
+            <div class="alert-danger">
+                <ul>
+                    <c:forEach items="${errors}" var="error">
+                        <li><c:out value="${error}"/></li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
+        <c:if test="${not empty succes}">
+            <div class="alert-succes">
+                <ul>
+                    <li><c:out value="${succes}"/></li>
+                </ul>
+            </div>
+        </c:if>
+
         <h2>Contact overview</h2>
+        <form name ="contactFilterForm" onsubmit="return validateContactFilterForm()" action="Servlet?command=FilterContacts" method="post">
+            <label for="startDate">From</label>
+            <input type="date" name="startDate" id="startDate">
+            <label for="endDate">Until</label>
+            <input type="date" name="endDate" id="endDate">
+            <input type="submit" name="submit" value="Filter">
+        </form>
         <table>
             <tr>
-                <th>Date</th>
-                <th>Hour</th>
+                <th>Date & hour</th>
                 <th>Name</th>
+                <th>e-mail</th>
+                <th>mobile</th>
+                <!--<th>test-result</th>-->
             </tr>
             <c:choose>
-            <c:when test="${not empty db}">
-            <c:forEach var="contact" items="${db}">
+            <c:when test="${not empty contacts}">
+            <c:forEach var="contact" items="${contacts}">
                 <tr>
-                <td><c:out value="${contact.date}"/></td>
-                <td><c:out value="${contact.hour}"/></td>
-                <td><c:out value="${contact.firstName}"/> <c:out value="${contact.lastName}"/></td>
+                    <td><c:out value="${contact.timestamp}"/></td>
+                    <td><c:out value="${contact.firstName}"/> <c:out value="${contact.lastName}"/></td>
+                    <td><c:out value="${contact.email}"/></td>
+                    <td><c:out value="${contact.gsm}"/></td>
                 </tr>
             </c:forEach>
             <caption>Contacts Overview</caption>
-
         </c:when>
-
         <c:otherwise>
             <p>There are no contacts</p>
         </c:otherwise>
@@ -58,18 +73,7 @@
         </table>
 
         <h2>Add contact</h2>
-            <c:if test="${not empty errors}">
-            <div class="alert-danger">
-                <ul>
-                    <c:forEach items="${errors}" var="error">
-                        <li>${error}</li>
-                    </c:forEach>
-                </ul>
-            </div>
-            </c:if>
         <form method="post" action="Servlet?command=AddContact" novalidate="novalidate">
-            <!-- novalidate in order to be able to run tests correctly -->
-
             <p>
                 <label for="firstName">First Name</label>
                 <input type="text" id="firstName" name="firstName" required value="<c:out value="${firstNamePreviousValue}"/>">

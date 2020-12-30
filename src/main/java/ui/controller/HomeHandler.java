@@ -1,5 +1,7 @@
 package ui.controller;
 
+import domain.model.Person;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeHandler extends RequestHandler{
     @Override
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException{
+
         return "index.jsp";
     }
 }

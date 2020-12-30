@@ -1,5 +1,8 @@
 package ui.controller;
 
+import domain.model.CovidTest;
+import domain.model.Person;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

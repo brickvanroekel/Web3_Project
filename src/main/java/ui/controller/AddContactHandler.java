@@ -17,7 +17,7 @@ public class AddContactHandler extends RequestHandler {
 
     @Override
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-
+        Person person = (Person) request.getSession().getAttribute("person");
         ArrayList<String> errors = new ArrayList<>();
 
         Contact contact = new Contact();
@@ -26,8 +26,7 @@ public class AddContactHandler extends RequestHandler {
         setTimestamp(request,contact,errors);
         setGsm(contact,request,errors);
         setEmail(contact,request,errors);
-
-        Person person = (Person) request.getSession().getAttribute("person");
+        contact.setContact(person.getUserid());
 
         if(person==null){
             request.setAttribute("errors","Log in");
@@ -37,11 +36,19 @@ public class AddContactHandler extends RequestHandler {
         if (errors.size() == 0) {
             try {
                 db.addContact(contact);
-                person.addContact(contact);
-                System.out.println(person.getContacts());
+                ArrayList<Contact> contacts = getDb().getContactsUser(person.getUserid());
+                request.setAttribute("contacts",contacts);
+                request.setAttribute("firstNamePreviousValue", "");
+                request.setAttribute("lastNamePreviousValue", "");
+                request.setAttribute("datePreviousValue","");
+                request.setAttribute("hourPreviousValue","");
+                request.setAttribute("gsmPreviousValue", "");
+                request.setAttribute("emailPreviousValue", "");
+                request.getSession().setAttribute("succes","You have succesfully added a contact!");
+                response.sendRedirect("Servlet?command=Contacts");
                 return "contacts.jsp";
             } catch (Exception exc) {
-                System.out.println(exc.getMessage());
+                exc.printStackTrace();
                 errors.add(exc.getMessage());
             }
         }
@@ -58,7 +65,6 @@ public class AddContactHandler extends RequestHandler {
         }
         catch (Exception exc){
             errors.add(exc.getMessage());
-            System.out.println(exc.getMessage());
             request.setAttribute("firstNameClass", "has-error");
         }
     }
@@ -72,7 +78,6 @@ public class AddContactHandler extends RequestHandler {
         }
         catch (Exception exc){
             errors.add(exc.getMessage());
-            System.out.println(exc.getMessage());
             request.setAttribute("lastNameClass", "has-error");
         }
     }
@@ -90,7 +95,6 @@ public class AddContactHandler extends RequestHandler {
             dateTime=LocalDateTime.from(formatter.parse(date+" "+hour));
             timestamp=Timestamp.valueOf(dateTime);
         }catch(DateTimeException e){
-            System.out.println(e.getMessage());
             errors.add("date or hour invalid");
         }
         contact.setTimestamp(timestamp);
@@ -105,7 +109,6 @@ public class AddContactHandler extends RequestHandler {
         }
         catch (Exception exc){
             errors.add(exc.getMessage());
-            System.out.println(exc.getMessage());
             request.setAttribute("gsmClass", "has-error");
         }
     }
@@ -119,7 +122,6 @@ public class AddContactHandler extends RequestHandler {
         }
         catch (Exception exc){
             errors.add(exc.getMessage());
-            System.out.println(exc.getMessage());
             request.setAttribute("emailClass", "has-error");
         }
     }

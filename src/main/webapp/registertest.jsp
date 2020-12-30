@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
@@ -8,15 +8,15 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8">
-    <title>Reservation</title>
+    <title>Register Test</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="scripts/validateForms.js"></script>
 </head>
 <body>
 <div id="container">
     <jsp:include page="header.jsp">
-        <jsp:param name="title" value="Reservation"/>
-        <jsp:param name="actual" value="reservation"/>
+        <jsp:param name="title" value="Register test"/>
+        <jsp:param name="actual" value="registertest"/>
     </jsp:include>
     <main>
         <c:if test="${not empty errors}">
@@ -35,23 +35,18 @@
                 </ul>
             </div>
         </c:if>
-
-    <form name="reservationForm" onsubmit="return validateReservationForm()" method="post" action="Servlet?command=Book" novalidate="novalidate">
-        <p>
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" value="<c:out value="${datePreviousValue}"/>" required >
-        </p>
-        <p>
-            <label for="hour">Arrival</label>
-            <input type="time" id="hour" name="hour" required value="<c:out value="${arrivalPreviousValue}"/>" >
-        </p>
-        <p><input type="submit" id="book" value="Book"></p>
-
-    </form>
-</main>
+        <form name="registerTestForm" onsubmit="return validateRegisterTestForm()" method="post" action="Servlet?command=TestPositive" novalidate="novalidate">
+            <p>
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" value="<c:out value="${datePreviousValue}"/>" required>
+            </p>
+            <p><input type="submit" id="testPositive" value="Covid-19 positive"></p>
+        </form>
+    </main>
     <footer>
         &copy; Webontwikkeling 3, UC Leuven-Limburg
     </footer>
 </div>
 </body>
 </html>
+

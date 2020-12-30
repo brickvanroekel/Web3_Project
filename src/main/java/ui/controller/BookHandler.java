@@ -23,24 +23,40 @@ public class BookHandler extends RequestHandler {
             request.setAttribute("errors","Log in");
             return "index.jsp";
         }
+
         Reservation reservation = new Reservation();
+        setId(reservation,errors);
         setTimestamp(request,reservation,errors);
         reservation.setShopper(person.getUserid());
-        reservation.setId();
 
 
         if(errors.size()==0){
             try {
-                person.addReservation(reservation);
-                db.addReservation(reservation);
-                request.setAttribute("reservation",reservation);
-                return "confirmation.jsp";
+                getDb().addReservation(reservation);
+                request.getSession().setAttribute("succes","You have succesfully booked a reservation!");
+                response.sendRedirect("Servlet?command=Reservation");
+                return "reservation.jsp";
             }catch (Exception e){
+                e.printStackTrace();
                 errors.add(e.getMessage());
             }
         }
         request.setAttribute("errors",errors);
         return "reservation.jsp";
+    }
+    private void setId(Reservation reservation, ArrayList<String> errors){
+        ArrayList<String> ids = db.getReservationIds();
+        String id = null;
+        try {
+            id = String.valueOf(Math.round(Math.random()*10000));
+            if(ids.contains(id)){
+                setId(reservation,errors);
+            }
+        }catch (Exception e){
+            errors.add("Couldn't set reservation ID");
+        }
+        reservation.setId(id);
+
     }
 
     private void setTimestamp(HttpServletRequest request,Reservation reservation,ArrayList<String> errors){
@@ -60,6 +76,10 @@ public class BookHandler extends RequestHandler {
         }
         reservation.setTimestamp(timestamp);
     }
+
+
+
+
 
 
 }

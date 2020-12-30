@@ -10,36 +10,25 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Contact {
-    //private String contactId;
+public class Contact implements Comparable<Contact>{
     private String email;
     private Timestamp timestamp;
     private String firstName;
     private String lastName;
     private String gsm;
+    private String contact;
 
-    public Contact(String firstName, String lastName, String gsm,String email, Timestamp timestamp) {
-        //setContactId(contactId);
+    public Contact(String contact, String firstName, String lastName, String gsm,String email, Timestamp timestamp) {
         setFirstName(firstName);
         setLastName(lastName);
         setTimestamp(timestamp);
         setEmail(email);
         setGsm(gsm);
-
+        setContact(contact);
     }
 
     public Contact() {
     }
-
-    /*public String getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(String contactId) {
-        if (contactId != null || !contactId.trim().isEmpty())
-            this.contactId = contactId;
-        throw new IllegalArgumentException("No ID given");
-    }*/
 
     public String getGsm() {
         return gsm;
@@ -97,5 +86,18 @@ public class Contact {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    @Override
+    public int compareTo(Contact contact){
+        return getTimestamp().toLocalDateTime().compareTo(contact.getTimestamp().toLocalDateTime());
     }
 }

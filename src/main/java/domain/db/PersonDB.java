@@ -19,9 +19,9 @@ public class PersonDB {
 
     public void add(Person person){
         if(person==null){
-            throw new DbException("Not a valid person");
+            throw new DbException("Give a valid person");
         }
-        String sqlString= String.format("INSERT INTO %s.users (userid,firstName, lastName, email, password) VALUES (?,?,?,?,?)",this.schema);
+        String sqlString= String.format("INSERT INTO %s.users (userid,firstName, lastName, email, password, role) VALUES (?,?,?,?,?,?)",this.schema);
 
         try {
             PreparedStatement sqlstatement = connection.prepareStatement(sqlString);
@@ -30,6 +30,7 @@ public class PersonDB {
             sqlstatement.setString(3,person.getLastName());
             sqlstatement.setString(4,person.getEmail());
             sqlstatement.setString(5,person.getPassword());
+            sqlstatement.setString(6, person.getRoleString());
             sqlstatement.execute();
         }catch (SQLException exception){
             throw new DbException(exception.getMessage());
@@ -49,7 +50,8 @@ public class PersonDB {
                 String lastName = result.getString("lastName");
                 String email = result.getString("email");
                 String password = result.getString("password");
-                Person person = new Person(userid,email,password,firstName,lastName);
+                String role = result.getString("role");
+                Person person = new Person(userid,email,password,firstName,lastName, role);
                 people.add(person);
             }
         }catch (SQLException exception){
@@ -62,17 +64,17 @@ public class PersonDB {
         String sqlString = String.format("UPDATE %s.users SET email ='"+person.getEmail()+"', password ='"+person.getPassword()+"',firstName ='"+person.getFirstName()+"',lastName ='"+person.getLastName()+"' WHERE userid='"+person.getUserid()+"'",this.schema);
         try {
             PreparedStatement sqlStatement = connection.prepareStatement(sqlString);
-            sqlStatement.executeQuery();
+            sqlStatement.execute();
         }catch (SQLException exception){
             throw new DbException(exception.getMessage());
         }
     }
 
     public void removePerson(String userid){
-        String sqlString = String.format("DELETE * FROM %s.users WHERE userid='"+userid+"'",this.schema);
+        String sqlString = String.format("DELETE FROM %s.users WHERE userid='"+userid+"'",this.schema);
         try {
             PreparedStatement sqlStatement = connection.prepareStatement(sqlString);
-            sqlStatement.executeQuery();
+            sqlStatement.execute();
         }catch (SQLException exception){
             throw new DbException(exception.getMessage());
         }

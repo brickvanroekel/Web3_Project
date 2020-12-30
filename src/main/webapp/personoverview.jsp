@@ -13,63 +13,81 @@
 </head>
 <body>
 <div id="container">
-    <header>
-        <h1><span>Scalini Mode</span></h1>
-        <nav>
-            <ul>
-                <li><a href="Servlet?command=Home">Home</a></li>
-                <li id="actual"><a href="Servlet?command=Overview">Overview</a></li>
-                <li><a href="Servlet?command=Register">Register</a></li>
-                <li><a href="Servlet?command=Reservation">Reservation</a></li>
-                <c:if test="${person!=null}">
-                    <li><a href="Servlet?command=RegisterTests">Register Test Result</a></li>
-                </c:if>
-                <li><a href="Servlet?command=Contacts">Contacts</a></li>
-            </ul>
-        </nav>
-
-
-    </header>
+    <jsp:include page="header.jsp">
+        <jsp:param name="title" value="User overview"/>
+        <jsp:param name="actual" value="personoverview"/>
+    </jsp:include>
     <main>
-        <h2>
-            User Overview
-        </h2>
     <table>
-        <tr>
-            <th>E-mail</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Reservation</th>
-        </tr>
         <c:choose>
-            <c:when test="${not empty db}">
-                <c:forEach var="person" items="${db}">
-                    <tr>
-                        <td><c:out value="${person.email}"/></td>
-                        <td><c:out value="${person.firstName}"/></td>
-                        <td><c:out value="${person.lastName}"/></td>
-                        <%--
-                        <c:when test="${user==null}}">
-                            <td>Log in to see reservations</td>
-                        </c:when>
-                        <c:otherwise>
-                            <c:when test="${not empty reservations}">
-                                <td> ${person.getReservations}</td>
-                            </c:when>">
-                            <c:otherwise>
-                                <td>No reservations</td>
-                            </c:otherwise>
-                        </c:otherwise>
-                        --%>
-                    </tr>
-                </c:forEach>
-
-    </table>
+            <c:when test="${person.role == 'administrator'}">
+                <tr>
+                    <th>E-mail</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+                <c:choose>
+                    <c:when test="${not empty db}">
+                        <c:forEach var="person" items="${db}">
+                            <tr>
+                                <td><c:out value="${person.email}"/></td>
+                                <td><c:out value="${person.firstName}"/></td>
+                                <td><c:out value="${person.lastName}"/></td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p>There is nobody registered.</p>
+                    </c:otherwise>
+                </c:choose>
+                <tr>
+                    <th>Reservations</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Date & time</th>
+                </tr>
+                <c:choose>
+                    <c:when test="${not empty reservations}">
+                        <c:forEach var="reservation" items="${reservations}">
+                            <tr>
+                                <td><c:out value="${reservation.id}"/></td>
+                                <td><c:out value="${reservation.timestamp}"/></td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p>There are no reservation</p>
+                    </c:otherwise>
+                </c:choose>
             </c:when>
-                <c:otherwise>
-                    <p>There is nobody registered.</p>
-                </c:otherwise>
+            <c:otherwise>
+                <tr>
+                    <th>E-mail</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Reservation</th>
+                </tr>
+                <tr>
+                    <td><c:out value="${person.email}"/></td>
+                    <td><c:out value="${person.firstName}"/></td>
+                    <td><c:out value="${person.lastName}"/></td>
+                    <td>
+                        <c:choose>
+                        <c:when test="${not empty reservations}">
+                        <c:forEach var="reservation" items="${reservations}">
+                    <td><c:out value="${reservation}"/></td>
+                    </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p>No reservations</p>
+                    </c:otherwise>
+                    </c:choose>
+                    </td>
+                </tr>
+            </c:otherwise>
         </c:choose>
+    </table>
 </main>
     <footer>
         &copy; Webontwikkeling 3, UC Leuven-Limburg

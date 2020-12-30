@@ -13,7 +13,8 @@ public class LogInHandler extends RequestHandler {
     @Override
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String userid = request.getParameter("userid");
-        Person person = null;
+        Person person;
+
         List<String> errors = new ArrayList<>();
 
         try {
@@ -24,23 +25,41 @@ public class LogInHandler extends RequestHandler {
             return "index.jsp";
         }
 
-        String password = request.getParameter("password");
-        boolean login = false;
+        try{
+            String password = request.getParameter("password");
+            boolean login = false;
+            if(userid.trim().equals("")){
+                request.setAttribute("errors", "No userid given");
+                return "index.jsp";
+            }
+            if(password.trim().equals("")){
+                request.setAttribute("errors", "No password given");
+                return "index.jsp";
+            }
+            if (!userid.isEmpty() && person == null) {
+                request.setAttribute("errors", "Username not found");
+                return "index.jsp";
+            }
+            if (person != null && !password.isEmpty()) {
+                login = person.isCorrectPassword(password);
+                System.out.println("Logged in as " + person.toString());
+            }
+            if (person != null && login) {
+                setSession(request,person);
+            }
+            else {
+                request.setAttribute("errors", "Password incorrect");
+                return "index.jsp";
+            }
+            request.getSession().setAttribute("succes","You have succesfully logged in!");
+            response.sendRedirect("Servlet?command=Home");
+            return "index.jsp";
+        }catch (Exception e){
+            errors.add(e.getMessage());
+            request.setAttribute("errors",errors);
+            return "index.jsp";
+        }
 
-        if (person != null && !password.isEmpty()) {
-            login = person.isCorrectPassword(password);
-            System.out.println("Logged in as " + person.toString());
-        }
-        if (person != null && login) {
-            request.getSession().setAttribute("person", person);
-        } else {
-            request.setAttribute("errors", "Password Incorrect");
-        }
-        if (!userid.isEmpty() && person == null) {
-            request.setAttribute("errors", "Username not found");
-        }
-
-        return "index.jsp";
     }
 
     private void setSession(HttpServletRequest request, Person person) {
