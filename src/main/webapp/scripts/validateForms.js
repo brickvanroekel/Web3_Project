@@ -158,6 +158,75 @@ function validateContactFilterForm(){
     }
 }
 
+function validateContactsForm(){
+    let form, firstName, lastName, date,hour, gsm,email,errors;
+    errors = [];
+    form = document.forms["contactsForm"];
+    firstName = form["firstName"].value;
+    lastName = form["lastName"].value;
+    date = form["date"].value;
+    hour = form["hour"].value;
+    gsm = form["gsm"].value;
+    email = form["email"].value;
+
+    if (firstName.trim() === "") {
+        errors.push("No first name given");
+        form["firstName"].value = "";
+        form["firstName"].className = "form-group has-error";
+    }
+    else form["firstName"].className = "form-group has-success";
+
+    if (lastName.trim() === "") {
+        errors.push("No last name given");
+        form["lastName"].value = "";
+        form["lastName"].className = "form-group has-error";
+    }
+    else form["lastName"].className = "form-group has-success";
+
+    if (date.trim() === "") {
+        errors.push("No date given");
+        form["date"].value = "";
+        form["date"].className = "form-group has-error";
+    }
+    else form["date"].className = "form-group has-success";
+
+    if (hour.trim() === "") {
+        errors.push("No hour given");
+        form["hour"].value = "";
+        form["hour"].className = "form-group has-error";
+    }
+    else form["hour"].className = "form-group has-success";
+
+    if (gsm.trim() === "") {
+        errors.push("No phone number given");
+        form["gsm"].value = "";
+        form["gsm"].className = "form-group has-error";
+    }
+    else form["gsm"].className = "form-group has-success";
+    
+    if (email.trim() === "") {
+        errors.push("No email given");
+        form["email"].value = "";
+        form["email"].className = "form-group has-error";
+    }
+    else {
+        let EMAIL_PATTERN = new RegExp("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        if (!email.match(EMAIL_PATTERN)) {
+            errors.push("Email is not valid");
+            form["email"].value = "";
+            form["email"].className = "form-group has-error";
+        }
+        else form["email"].className = "form-group has-success";
+    }
+
+    if (errors.length > 0) {
+        createErrorMessage(document.getElementsByTagName("form")[0], errors);
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function validateRegisterTestForm(){
     let form, date,errors;
     errors = [];

@@ -73,7 +73,7 @@
         </table>
 
         <h2>Add contact</h2>
-        <form method="post" action="Servlet?command=AddContact" novalidate="novalidate">
+        <form method="post" name="contactsForm" onsubmit="return validateContactsForm()" action="Servlet?command=AddContact" novalidate="novalidate">
             <p>
                 <label for="firstName">First Name</label>
                 <input type="text" id="firstName" name="firstName" required value="<c:out value="${firstNamePreviousValue}"/>">

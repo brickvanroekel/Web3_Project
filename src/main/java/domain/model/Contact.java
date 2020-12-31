@@ -35,6 +35,9 @@ public class Contact implements Comparable<Contact>{
     }
 
     public void setGsm(String gsm) {
+        if(gsm==null || gsm.trim().equals("")){
+            throw new IllegalArgumentException("No phone number given");
+        }
         this.gsm = gsm;
     }
 
