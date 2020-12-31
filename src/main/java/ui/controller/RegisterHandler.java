@@ -23,6 +23,11 @@ public class RegisterHandler extends RequestHandler{
             setEmail(person,request,errors);
             setPassword(person,request,errors);
 
+            if(getDb().getPerson(person.getUserid())!=null){
+                errors.add("User already exists");
+                request.setAttribute("errors",errors);
+                return "register.jsp";
+            }
 
             if (errors.size() == 0) {
                 try {

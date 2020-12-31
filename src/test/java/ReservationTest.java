@@ -9,8 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.Assert.assertEquals;
-
-
+import static org.junit.Assert.assertTrue;
 
 
 public class ReservationTest {
@@ -38,45 +37,6 @@ public class ReservationTest {
 
 
     @Test
-    public void test_login_Incorrect_Credentials() {
-        driver.get(path+"?command=Home");
-
-        logIn("1", "t");
-
-        String title = driver.getTitle();
-        assertEquals("Home",title);
-
-        WebElement errorMsg = driver.findElement(By.cssSelector("div.alert-danger ul li"));
-        assertEquals("Password Incorrect", errorMsg.getText());
-
-
-    }
-
-    @Test
-    public void test_Login_Nonexisting_Credentials() {
-        driver.get(path+"?command=Home");
-
-        logIn("nonexistinguser", "p");
-
-        String title = driver.getTitle();
-        assertEquals("Home",title);
-
-        WebElement errorMsg = driver.findElement(By.cssSelector("div.alert-danger ul li"));
-        assertEquals("Username not found", errorMsg.getText());
-    }
-
-    @Test
-    public void test_login_Correct_Credentials() {
-        driver.get(path+"?command=Home");
-
-        logIn("1", "d");
-
-        String title = driver.getTitle();
-        assertEquals("Home",title);
-
-    }
-
-    @Test
     public void test_Reservation_Incomplete0_Registration() {
         driver.get(path+"?command=Home");
 
@@ -89,7 +49,7 @@ public class ReservationTest {
         button.click();
 
         WebElement errorMsg = driver.findElement(By.cssSelector("div.alert-danger ul li"));
-        assertEquals("Give correct arrival time", errorMsg.getText());
+        assertEquals("date or hour invalid", errorMsg.getText());
     }
 
     @Test
@@ -99,12 +59,13 @@ public class ReservationTest {
         logIn("1", "d");
 
         driver.get(path+"?command=Reservation");
-        fillOutField("arrival", "12:00");
+        fillOutField("hour", "12:00");
+        fillOutField("date", "");
         WebElement button=driver.findElement(By.id("book"));
         button.click();
 
         WebElement errorMsg = driver.findElement(By.cssSelector("div.alert-danger ul li"));
-        assertEquals("Give correct date", errorMsg.getText());
+        assertEquals("date or hour invalid", errorMsg.getText());
     }
 
 
@@ -116,13 +77,13 @@ public class ReservationTest {
         driver.get(path+"?command=Reservation");
 
         fillOutField("date", "25/11/2020");
-        fillOutField("arrival", "12:00");
+        fillOutField("hour", "12:00");
 
         WebElement button=driver.findElement(By.id("book"));
         button.click();
 
-        String title = driver.getTitle();
-        assertEquals("Confirmation",title );
+        Boolean isPresent = driver.findElements(By.className("alert-succes")).size() > 0;
+        assertTrue(isPresent);
 
     }
 

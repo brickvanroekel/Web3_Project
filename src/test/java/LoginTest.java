@@ -42,13 +42,13 @@ public class LoginTest {
     @Test
     public void Test_get_welcome_message_after_login(){
         HomePage homePage = PageFactory.initElements(driver,HomePage.class);
-        homePage.setUserid("test");
-        homePage.setPassword("test");
+        homePage.setUserid("admin");
+        homePage.setPassword("a");
         homePage.submit();
 
         assertEquals("Home",homePage.getTitle());
         ArrayList<WebElement> h3s = (ArrayList<WebElement>) driver.findElements(By.tagName("h3"));
-        assertTrue(homePage.containsWebelement(h3s, "Welcome tester"));
+        assertTrue(homePage.containsWebelement(h3s, "Welcome ad"));
     }
 
     @Test
