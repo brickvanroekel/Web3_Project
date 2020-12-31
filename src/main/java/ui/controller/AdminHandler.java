@@ -34,9 +34,6 @@ public class AdminHandler extends RequestHandler{
             setEndDate(request);
             setUser(request);
 
-            System.out.println("start: "+startDate);
-            System.out.println("end: "+endDate);
-            System.out.println("user: "+userid);
             List<Contact> contacts = getDb().getContactsUser(userid);
             try {
                 for (Contact c:contacts) {
@@ -44,6 +41,8 @@ public class AdminHandler extends RequestHandler{
                         filteredContacts.add(c);
                     }
                 }
+                request.setAttribute("db",db.getPersons());
+                request.setAttribute("tests",db.getAllTests());
                 request.setAttribute("startPreviousValue",startDate);
                 request.setAttribute("endPreviousValue",endDate);
                 request.setAttribute("contacts",filteredContacts);

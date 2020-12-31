@@ -15,7 +15,7 @@
 <div id="container">
     <jsp:include page="header.jsp">
         <jsp:param name="title" value="Existing test"/>
-        <jsp:param name="actual" value="existingtest"/>
+        <jsp:param name="actual" value="registertest"/>
     </jsp:include>
     <main>
         <c:if test="${not empty errors}">
@@ -29,7 +29,7 @@
         </c:if>
         <article>
             <p>You have recently registered a test, this test gets deleted after 14 days</p>
-            <p>If the 14 days are passed and you want to register a new test, please refresh this page</p>
+            <p>If the 14 days have passed and you want to register a new test, please refresh this page</p>
         </article>
     </main>
     <footer>

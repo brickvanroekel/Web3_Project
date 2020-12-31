@@ -9,6 +9,7 @@ import util.DbConnectionService;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class ReservationDB {
@@ -57,6 +58,7 @@ public class ReservationDB {
             System.out.println(exception.getMessage());
             throw new DbException(exception.getMessage());
         }
+        reservations.sort(Comparator.comparing(r -> r.getTimestamp().toLocalDateTime()));
         return reservations;
     }
 
@@ -89,6 +91,7 @@ public class ReservationDB {
         }catch (SQLException e){
             throw new DbException(e.getMessage());
         }
+        reservations.sort(Comparator.comparing(r -> r.getTimestamp().toLocalDateTime()));
         return reservations;
     }
 
